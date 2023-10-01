@@ -32,7 +32,7 @@ class Task(Base):
 
   __tablename__ = "task"
   id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-  user_id: Mapped[int]
+  id_user: Mapped[int]
   name: Mapped[str]
   description: Mapped[str]
   done: Mapped[bool]
