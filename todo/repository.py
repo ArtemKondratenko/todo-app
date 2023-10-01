@@ -62,7 +62,7 @@ def add_task(task: str, description: str, id_user: int, done: bool) -> int:
 
   with Session(engine) as session:
     stmt = insert(Task) \
-      .values(task=task, description=description, id_user=id_user, done=done) \
+      .values(name=task, description=description, id_user=id_user, done=done) \
       .returning(Task.id)
 
     result = session.scalars(stmt).first()
