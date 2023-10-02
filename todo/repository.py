@@ -4,7 +4,7 @@ import os
 # https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 
 from .db import Task, User, engine
-from sqlalchemy import insert, select, update  # type: ignore
+from sqlalchemy import insert, select, update, delete  # type: ignore
 from sqlalchemy.orm import Session
 
 def add_user(username: str, password: str) -> int:
@@ -92,10 +92,10 @@ def mark_task_done(id: int):
 def delet_task(id: int):
   """Удаляет, задачу"""
   with Session(engine) as session:
-    stmt = update(Task) \
-      .where(Task.id == id) \
-      .delete(done = True)
-  
+    stmt = delete(Task) \
+      .where(Task.id == id) 
+    session.execute(stmt)
+    session.commit()
 
 def hash_password(password: str) -> str:
   """Зашифровывает пароль.

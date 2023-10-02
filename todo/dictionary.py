@@ -34,8 +34,9 @@ def done_task(id: int):
   return redirect("/dictionary/task")
 
 
-@dictionary.post("/dictionary/delete-task/<int:id>")
+@dictionary.post("/delete-task/<int:id>")
 def delet_task(id: int):
   if not session.get('logged_in'):
     return redirect('/auth/')
-  
+  repository.delet_task(id)
+  return redirect("/dictionary/task")
