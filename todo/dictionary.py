@@ -13,6 +13,7 @@ def get_tasks():
 
 # https://html.form.guide/checkbox/html-checkbox-form-submit-value/
 
+
 @dictionary.post("/task")
 def create_task():
   if not session.get('logged_in'):
@@ -23,3 +24,18 @@ def create_task():
   done = bool(request.form.get("completed"))
   repository.add_task(task, description, user_id, done)
   return redirect("/dictionary/task")
+
+
+@dictionary.post("/done-task/<int:id>")
+def done_task(id: int):
+  if not session.get('logged_in'):
+    return redirect('/auth/')
+  repository.mark_task_done(id)
+  return redirect("/dictionary/task")
+
+
+@dictionary.post("/dictionary/delete-task/<int:id>")
+def delet_task(id: int):
+  if not session.get('logged_in'):
+    return redirect('/auth/')
+  

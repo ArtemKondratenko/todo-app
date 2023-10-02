@@ -1,7 +1,23 @@
 {% for task in tasks %}
+<div class='task'>
   <h2>{{task.name}}</h2>
   <p>{{task.description}}</p>
-  <p>{{task.done}}</p>
+  <form method="post">
+    {% if not task.done %}
+      <button formaction="/dictionary/done-task/{{task.id}}">Пометить задачу как выполненную</button>
+    {% endif %}
+    <button formaction="/dictionary/delete-task/{{task.id}}">Удалить задачу</button>
+  </form>
+</div>
 {% endfor %}
+
+<style>
+  .task {
+    border: 2px solid;
+    margin: 10px;
+    width: fit-content;
+    padding: 5px;
+  }
+</style>
 
 <a href="/task/create_task">Добавление новой задачи</a>

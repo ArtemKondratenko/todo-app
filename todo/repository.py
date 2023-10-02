@@ -4,7 +4,7 @@ import os
 # https://docs.sqlalchemy.org/en/20/orm/quickstart.html
 
 from .db import Task, User, engine
-from sqlalchemy import insert, select  # type: ignore
+from sqlalchemy import insert, select, update  # type: ignore
 from sqlalchemy.orm import Session
 
 def add_user(username: str, password: str) -> int:
@@ -69,11 +69,33 @@ def add_task(task: str, description: str, id_user: int, done: bool) -> int:
     session.commit()
   return result  # type: ignore
 
+# https://docs.sqlalchemy.org/en/20/tutorial/data_update.html#tutorial-core-update-delete
 
 def user_exists(username: str) -> bool:
   """Проверяет, существует ли пользователь с заданным именем."""
   return get_user(username) is not None
 
+# stmt = (
+# ...     update(user_table)
+# ...     .where(user_table.c.name == "patrick")
+# ...     .values(fullname="Patrick the Star")
+# ... )
+def mark_task_done(id: int):
+  """Изменяет, статут задачи (волнена или нет)"""
+  with Session(engine) as session:
+    stmt = update(Task) \
+      .where(Task.id == id) \
+      .values(done = True)
+    session.execute(stmt)
+    session.commit()
+
+def delet_task(id: int):
+  """Удаляет, задачу"""
+  with Session(engine) as session:
+    stmt = update(Task) \
+      .where(Task.id == id) \
+      .delete(done = True)
+  
 
 def hash_password(password: str) -> str:
   """Зашифровывает пароль.
