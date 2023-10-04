@@ -1,10 +1,10 @@
 from . import repository
 from flask import Blueprint, redirect, render_template, request, session
 
-dictionary = Blueprint('working_task', __name__)
+working_task = Blueprint('working_task', __name__)
 
 
-@dictionary.get('/task')
+@working_task.get('/task')
 def get_tasks():
   if not session.get('logged_in'):
     return redirect('/auth/')
@@ -14,7 +14,7 @@ def get_tasks():
 # https://html.form.guide/checkbox/html-checkbox-form-submit-value/
 
 
-@dictionary.post("/task")
+@working_task.post("/task")
 def create_task():
   if not session.get('logged_in'):
     return redirect('/auth/')
@@ -26,7 +26,7 @@ def create_task():
   return redirect("/working_task/task")
 
 
-@dictionary.post("/done-task/<int:id>")
+@working_task.post("/done-task/<int:id>")
 def done_task(id: int):
   if not session.get('logged_in'):
     return redirect('/auth/')
@@ -34,7 +34,7 @@ def done_task(id: int):
   return redirect("/working_task/task")
 
 
-@dictionary.post("/delete-task/<int:id>")
+@working_task.post("/delete-task/<int:id>")
 def delet_task(id: int):
   if not session.get('logged_in'):
     return redirect('/auth/')
