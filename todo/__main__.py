@@ -1,8 +1,8 @@
 from flask import Flask, redirect, render_template, session
 
-from .auth import auth
-from .db import create_tables
-from .dictionary import dictionary
+from auth import auth
+from db import create_tables
+from Task import dictionary
 
 create_tables()
 
@@ -10,13 +10,13 @@ create_tables()
 app = Flask(__name__)
 app.secret_key = b'Jh323G8s!jLKz'
 app.register_blueprint(auth, url_prefix="/auth")
-app.register_blueprint(dictionary, url_prefix="/dictionary")
+app.register_blueprint(dictionary, url_prefix="/working_task")
 
 @app.get("/")
 def main():
   if not session.get('logged_in'):
       return redirect('/auth/')
-  return redirect('/dictionary/task')
+  return redirect('/working_task/task')
 
 @app.get("/task/create_task")
 def get_task_html():

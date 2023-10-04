@@ -1,7 +1,7 @@
 from . import repository
 from flask import Blueprint, redirect, render_template, request, session
 
-dictionary = Blueprint('dictionary', __name__)
+dictionary = Blueprint('working_task', __name__)
 
 
 @dictionary.get('/task')
@@ -23,7 +23,7 @@ def create_task():
   user_id = session['user_id']
   done = bool(request.form.get("completed"))
   repository.add_task(task, description, user_id, done)
-  return redirect("/dictionary/task")
+  return redirect("/working_task/task")
 
 
 @dictionary.post("/done-task/<int:id>")
@@ -31,7 +31,7 @@ def done_task(id: int):
   if not session.get('logged_in'):
     return redirect('/auth/')
   repository.mark_task_done(id)
-  return redirect("/dictionary/task")
+  return redirect("/working_task/task")
 
 
 @dictionary.post("/delete-task/<int:id>")
@@ -39,4 +39,4 @@ def delet_task(id: int):
   if not session.get('logged_in'):
     return redirect('/auth/')
   repository.delet_task(id)
-  return redirect("/dictionary/task")
+  return redirect("/working_task/task")

@@ -4,9 +4,9 @@
   <p>{{task.description}}</p>
   <form method="post">
     {% if not task.done %}
-      <button formaction="/dictionary/done-task/{{task.id}}">Пометить задачу как выполненную</button>
+      <button formaction="/working_task/done-task/{{task.id}}">Пометить задачу как выполненную</button>
     {% endif %}
-    <button formaction="/dictionary/delete-task/{{task.id}}">Удалить задачу</button>
+    <button formaction="/working_task/delete-task/{{task.id}}">Удалить задачу</button>
   </form>
 </div>
 {% endfor %}
